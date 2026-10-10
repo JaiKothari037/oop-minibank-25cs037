@@ -16,9 +16,9 @@ public class Card
     }
 
     @Override
-    public boolean equals(Card c)
+    public boolean equals(Object c)
     {
-        if ((rank == c.rank) and (suit == c.suit))
+        if ((rank.equals(((Card)c).rank) /*== ((Card)c).rank*/) && (suit.equals(((Card)c).suit)) /*== ((Card)c).suit)*/)
         {
             return true;
         }
@@ -26,5 +26,6 @@ public class Card
         {
             return false;
         }
-    }
+    }  
+
 }

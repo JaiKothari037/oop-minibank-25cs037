@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Point
 {
     private int x;
@@ -11,14 +13,23 @@ public class Point
 
     public String toString()
     {
-        return "x , y";
+        return "(" + x + "," + y + ")";
     }
 
     public boolean equals(Object a)
     {
-        if (x == y)
+        if ((((Point)a).x == this.x) && (((Point)a).y == this.y))
         {
-            
+            return true;
         }
+
+        return false;
     }
+
+    public int hashCode()
+    {
+        return Objects.hash(x,y);
+    }
+
+
 }

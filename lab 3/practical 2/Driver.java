@@ -22,19 +22,30 @@ public class Driver
             
             Card a = new Card(rank,suit);
 
-            for (int j = 0; j < i+1; j++)
+            if (i == 0)
+            {
+                cards[i] = a;
+                System.out.println("card added");
+                i++;
+                continue;
+            }
+
+            int check = 0;
+            for (int j = 0; j < i; j++)
             {
                 if (cards[j].equals(a))
                 {
                     System.out.println("duplicate found" + a.toString());
-                    continue;
+                    check = 1;
+                    break;
                 }
-                else
-                {
-                    System.out.println("card added");
-                    cards[i] = a;
-                    i++;
-                }
+            }
+
+            if (check == 0)
+            {
+                System.out.println("card added");
+                cards[i] = a;
+                i++;
             }
         }
     }

@@ -8,13 +8,10 @@ public class Driver
 
         for (int i = 0; i<5; i++)
         {
-            System.out.println("password : ");
+            System.out.print("password : ");
             String input = sc.next();
 
-            PasswordChecker pw = new PasswordChecker(input);
-            pw.strength();
-
-            
+            PasswordChecker pw = new PasswordChecker(input);            
         }
     }
 }
