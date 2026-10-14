@@ -1,70 +1,117 @@
-class Booking {
+// class Task implements Runnable
+// {
+//     public void run()
+//     {
+//         if (Booking.seatsLeft > 0)
+//         {
+//             try {
+//                 Thread.sleep(50);
+//             } catch (Exception e) {}
+//             Booking.seatsLeft--;
+//         }
+//     }
+// }
 
-    static int seatsLeft = 5;
-    static int successfulBookings = 0;
+// public class Booking
+// {
+//     public static int seatsLeft = 5;
+//     public static void main(String[] args) throws InterruptedException 
+//     {
+//         Thread thread1 = new Thread(new Task());
+//         Thread thread2 = new Thread(new Task());
+//         Thread thread3 = new Thread(new Task());
+//         Thread thread4 = new Thread(new Task());
+//         Thread thread5 = new Thread(new Task());
+//         Thread thread6 = new Thread(new Task());
+//         Thread thread7 = new Thread(new Task());
+//         Thread thread8 = new Thread(new Task());
+//         Thread thread9 = new Thread(new Task());
+//         Thread thread10 = new Thread(new Task());
 
-    // Without synchronization
-    static void book() {
-        if (seatsLeft > 0) {
+//         thread1.start();
+//         thread2.start();
+//         thread3.start();
+//         thread4.start();
+//         thread5.start();
+//         thread6.start();
+//         thread7.start();
+//         thread8.start();
+//         thread9.start();
+//         thread10.start();
+//         thread1.join();
+//         thread2.join();
+//         thread3.join();
+//         thread4.join();
+//         thread5.join();
+//         thread6.join();
+//         thread7.join();
+//         thread8.join();
+//         thread9.join();
+//         thread10.join();
+
+//         System.out.println(seatsLeft);
+
+//     }
+// }
+
+class Task implements Runnable
+{
+    public void run()
+    {
+        Booking.book();
+    }
+}
+
+public class Booking
+{
+    public static int seatsLeft = 5;
+
+    public synchronized static void book()
+    {
+        if (Booking.seatsLeft > 0)
+        {
             try {
-                Thread.sleep(100); // makes the race condition easier to see
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+                Thread.sleep(50);
+            } catch (Exception e) {}
             seatsLeft--;
-            successfulBookings++;
-            System.out.println(Thread.currentThread().getName() + " booked a seat");
         }
     }
+    
+    public static void main(String[] args) throws InterruptedException 
+    {
+        Thread thread1 = new Thread(new Task());
+        Thread thread2 = new Thread(new Task());
+        Thread thread3 = new Thread(new Task());
+        Thread thread4 = new Thread(new Task());
+        Thread thread5 = new Thread(new Task());
+        Thread thread6 = new Thread(new Task());
+        Thread thread7 = new Thread(new Task());
+        Thread thread8 = new Thread(new Task());
+        Thread thread9 = new Thread(new Task());
+        Thread thread10 = new Thread(new Task());
 
-    // With synchronization
-    static synchronized void synchronizedBook() {
-        if (seatsLeft > 0) {
-            seatsLeft--;
-            successfulBookings++;
-            System.out.println(Thread.currentThread().getName() + " booked a seat");
-        }
-    }
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+        thread5.start();
+        thread6.start();
+        thread7.start();
+        thread8.start();
+        thread9.start();
+        thread10.start();
+        thread1.join();
+        thread2.join();
+        thread3.join();
+        thread4.join();
+        thread5.join();
+        thread6.join();
+        thread7.join();
+        thread8.join();
+        thread9.join();
+        thread10.join();
 
-    public static void main(String[] args) throws InterruptedException {
+        System.out.println(seatsLeft);
 
-        // Test without synchronization
-        System.out.println("Without synchronization:");
-
-        seatsLeft = 5;
-        successfulBookings = 0;
-
-        Thread[] threads = new Thread[10];
-
-        for (int i = 0; i < 10; i++) {
-            threads[i] = new Thread(() -> book(), "Thread-" + (i + 1));
-            threads[i].start();
-        }
-
-        for (Thread t : threads) {
-            t.join();
-        }
-
-        System.out.println("Successful bookings: " + successfulBookings);
-        System.out.println("Seats left: " + seatsLeft);
-
-        // Test with synchronization
-        System.out.println("\nWith synchronization:");
-
-        seatsLeft = 5;
-        successfulBookings = 0;
-
-        for (int i = 0; i < 10; i++) {
-            threads[i] = new Thread(() -> synchronizedBook(), "Thread-" + (i + 1));
-            threads[i].start();
-        }
-
-        for (Thread t : threads) {
-            t.join();
-        }
-
-        System.out.println("Successful bookings: " + successfulBookings);
-        System.out.println("Seats left: " + seatsLeft);
     }
 }

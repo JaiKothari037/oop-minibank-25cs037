@@ -1,31 +1,68 @@
-class MyThread extends Thread
+// class CounterThread extends Thread
+// {
+//     @Override
+//     public void run()
+//     {
+//         for (int i = 0; i<10000; i++)
+//         {
+//             CounterRace.count++;
+//         }
+//     }
+// }
+
+// public class CounterRace
+// {
+//    public static int count = 0;
+
+//    public static void main(String[] args) throws InterruptedException
+//    {
+//         CounterThread a = new CounterThread();
+//         Thread thread1 = new Thread(a);
+//         CounterThread b = new CounterThread();
+//         Thread thread2 = new Thread(b);
+
+//         thread1.start();
+//         thread2.start();
+//         thread1.join();
+//         thread2.join();
+
+//         System.out.println(count);
+//    } 
+// }
+
+class CounterThread extends Thread
 {
-    public static int counter = 0;
     @Override
-    public synchronized void run()
+    public void run()
     {
-        for (int i = 0; i< 10000; i++)
+        for (int i = 0; i<10000; i++)
         {
-            counter++;
+            CounterRace.increment();
         }
     }
 }
 
 public class CounterRace
 {
-    public static void main(String[] args) throws InterruptedException
-    {
-        MyThread t1 = new MyThread();
-        MyThread t2 = new MyThread();
-        MyThread t3 = new MyThread();
+   public static int count = 0;
 
-        t1.start();
-        t2.start();
-        t3.start();
-        t1.join();
-        t2.join();
-        t3.join();
+   public synchronized static void increment()
+   {
+        count++;
+   }
 
-        System.out.println(MyThread.counter);
-    }
+   public static void main(String[] args) throws InterruptedException
+   {
+        CounterThread a = new CounterThread();
+        Thread thread1 = new Thread(a);
+        CounterThread b = new CounterThread();
+        Thread thread2 = new Thread(b);
+
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+
+        System.out.println(count);
+   } 
 }
